@@ -21,6 +21,10 @@ func Provide(opts ...opt.Option) error {
 		config.Username = "root"
 	}
 
+	if config.DialTimeout == 0 {
+		config.DialTimeout = 5
+	}
+
 	return container.Container.Provide(func(ctx context.Context, logger *log.Logger) (*clientv3.Client, error) {
 		cli, err := clientv3.New(clientv3.Config{
 			Endpoints:   config.Endpoints,
