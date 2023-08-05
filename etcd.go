@@ -30,12 +30,13 @@ func Provide(opts ...opt.Option) error {
 			Endpoints:   config.Endpoints,
 			Username:    config.Username,
 			Password:    config.Password,
-			DialTimeout: time.Duration(config.DialTimeout) * time.Second,
+			DialTimeout: 10 * time.Second,
+			Context:     ctx,
+			Logger:      logger.Logger,
 		})
 		if err != nil {
 			return nil, err
 		}
-		cli.WithLogger(logger.RawLogger)
 
 		container.AddCloseAble(func() {
 			cli.Close()
